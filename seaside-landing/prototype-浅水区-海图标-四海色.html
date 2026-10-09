@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>下海 · 全国海滨浴场索引｜哪些海滨城市能真的下海游泳</title>
+<meta name="description" content="按「有正规海滨浴场、可以下海游泳」的标准，梳理全国沿海省级行政区的海滨浴场清单，并区分天然浴场、人工受限浴场与有海岸线但不适合下海的城市。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 字体样式表异步加载：Google Fonts 在部分网络环境下会长时间挂起，
+     若用同步 <link rel="stylesheet"> 会阻塞首屏渲染（白屏）。
+     这里先以 media="print" 降级为非阻塞，加载完成后再切回 all。
+     首屏立即以系统字体（Songti SC / PingFang SC）渲染，字体到位后自动升级。 -->
+<link rel="stylesheet" media="print" onload="this.media='all'"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500&family=Space+Mono:wght@400&family=ZCOOL+XiaoWei&display=swap">
+<noscript>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500&family=Space+Mono:wght@400&family=ZCOOL+XiaoWei&display=swap">
+</noscript>
+<style>
+/* ============================================================
+   Design System Tokens — A骨 + B标 + C色
+   来源：DesignSystemManifest（全部色值通过 WCAG AA 实算校验）
+   ============================================================ */
+:root{
+  /* 结构层 · 浅水区 */
+  --deep:#0B4F5C;          /* 深靛青 · 主色  */
+  --deep-hover:#093F4A;
+  --deep-tint:#E6EFF0;
+  --buoy:#E8502F;          /* 浮标橙 · 强调（仅焦点环/浮标点/大号数字，禁止承载正文） */
+  --kelp:#6BA292;
+
+  /* 语义层 · 四海
+     每个海域两档：--sea 用于图形（色块/色条/泳道线，需 ≥3:1 但不承载文字），
+     --sea-ink 用于文字（全部 ≥4.5:1，满足 AA 正文标准）。
+     沙黄与灰绿作文字时对比度不足，必须走 ink 档。 */
+  --sea-bohai:#7A9B8E;        --sea-bohai-ink:#46685C;
+  --sea-huanghai:#C9A45C;     --sea-huanghai-ink:#7A5A14;
+  --sea-donghai:#4A8FA8;      --sea-donghai-ink:#2C6178;
+  --sea-nanhai:#0F5E6B;       --sea-nanhai-ink:#0F5E6B;
+
+  /* 语义层 · 下海资格（独立于海域色） */
+  --swim:#17754C;
+  --swim-bg:#E4F1EA;
+  --caution:#9A5B0B;
+  --caution-bg:#F7EEDF;
+  --nogo:#B3261E;
+  --nogo-bg:#F8E9E7;
+
+  /* 中性层 */
+  --sand:#F4F7F5;
+  --surface:#FFFFFF;
+  --hairline:#DDE6E3;
+  --hairline-strong:#C6D4D0;
+  --ink:#16282C;
+  --graphite:#4E6165;
+  --mist:#5F7074;
+
+  /* 字体
+     注意：Google Fonts 在部分网络环境下不可达，因此每条字体栈都配置了
+     字面气质接近的系统字体回退——降级后版式依然成立，不会退化成默认衬线。 */
+  --f-display:'ZCOOL XiaoWei','Songti SC','Source Han Serif SC','Noto Serif SC','STSong',serif;
+  --f-body:'Noto Sans SC',-apple-system,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  --f-mono:'Space Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+
+  /* 间距标尺 · 4px 基准 */
+  --s-2xs:4px; --s-xs:8px; --s-sm:12px; --s-md:16px;
+  --s-lg:24px; --s-xl:32px; --s-2xl:48px; --s-3xl:64px; --s-4xl:96px;
+
+  /* 圆角 */
+  --r-sm:3px; --r-md:6px; --r-lg:10px; --r-xl:16px; --r-pill:9999px;
+
+  /* 阴影 */
+  --sh-sm:0 1px 2px rgba(11,79,92,.06);
+  --sh-md:0 4px 12px rgba(11,79,92,.08);
+  --sh-lg:0 12px 32px rgba(11,79,92,.10);
+
+  --rail-w:212px;
+  --topbar-h:60px;
+}
+
+/* ============================================================
+   Reset
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--sand);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4,p,ul,ol,figure{margin:0}
+ul,ol{list-style:none;padding:0}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+input{font:inherit}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--buoy);outline-offset:2px;border-radius:var(--r-sm)}
+::selection{background:var(--deep-tint)}
+
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+.skip{
+  position:absolute;left:var(--s-md);top:-100px;z-index:100;
+  background:var(--deep);color:#fff;padding:var(--s-xs) var(--s-md);
+  border-radius:var(--r-md);font-size:14.5px;transition:top .2s ease;
+}
+.skip:focus{top:var(--s-md)}
+
+/* ============================================================
+   Topbar
+   ============================================================ */
+.topbar{
+  position:sticky;top:0;z-index:40;
+  background:rgba(244,247,245,.92);
+  backdrop-filter:saturate(180%) blur(12px);
+  -webkit-backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid var(--hairline);
+  transition:box-shadow .2s ease;
+}
+.topbar.is-stuck{box-shadow:var(--sh-sm)}
+.topbar__inner{
+  max-width:1240px;margin:0 auto;height:var(--topbar-h);
+  padding:0 var(--s-lg);
+  display:flex;align-items:center;gap:var(--s-lg);
+}
+.brand{display:flex;align-items:center;gap:var(--s-sm);flex:0 0 auto}
+.brand__mark{
+  width:22px;height:22px;border-radius:var(--r-pill);
+  border:1.5px solid var(--deep);position:relative;flex:0 0 auto;
+}
+.brand__mark::after{
+  content:"";position:absolute;left:3px;right:3px;bottom:4px;height:1.5px;
+  background:var(--buoy);border-radius:1px;
+}
+.brand__name{font-family:var(--f-display);font-size:21px;line-height:1;letter-spacing:.02em}
+.brand__sub{
+  display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;
+  color:var(--mist);margin-top:3px;text-transform:uppercase;
+}
+.search{position:relative;flex:1 1 auto;max-width:400px;margin-left:auto}
+.search__icon{
+  position:absolute;left:10px;top:50%;transform:translateY(-50%);
+  width:15px;height:15px;pointer-events:none;color:var(--mist);
+}
+.search input{
+  width:100%;height:38px;padding:0 var(--s-sm) 0 32px;
+  background:var(--surface);border:1px solid var(--hairline);
+  border-radius:var(--r-md);color:var(--ink);font-size:14.5px;
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.search input::placeholder{color:var(--mist)}
+.search input:hover{border-color:var(--hairline-strong)}
+.search input:focus{outline:none;border-color:var(--deep);box-shadow:0 0 0 3px var(--deep-tint)}
+.search input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+.search__clear{
+  position:absolute;right:4px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:var(--r-pill);color:var(--mist);
+  display:none;align-items:center;justify-content:center;
+}
+.search__clear:hover{background:var(--deep-tint);color:var(--deep)}
+.search.has-value .search__clear{display:flex}
+.search__clear:focus-visible{outline:2px solid var(--buoy);outline-offset:1px}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero{
+  max-width:1240px;margin:0 auto;
+  padding:var(--s-4xl) var(--s-lg) var(--s-3xl);
+  border-bottom:1px solid var(--hairline);
+}
+.hero__kicker{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;
+  color:var(--mist);text-transform:uppercase;margin-bottom:var(--s-md);
+  display:flex;align-items:center;gap:var(--s-sm);
+}
+.hero__kicker::before{
+  content:"";width:32px;height:1px;background:var(--hairline-strong);flex:0 0 auto;
+}
+.hero h1{
+  font-family:var(--f-display);font-weight:400;
+  font-size:clamp(34px,5.4vw,60px);line-height:1.14;
+  letter-spacing:.01em;max-width:17em;margin-bottom:var(--s-lg);
+  text-wrap:balance;
+}
+.hero h1 em{font-style:normal;color:var(--deep);border-bottom:3px solid var(--buoy);padding-bottom:4px}
+/* 中文标题不能交给自动换行——会把「游泳」「很多」这类词从中间劈开。
+   用不可断词组锁定语义单元，换行只发生在词与词之间。 */
+.nb{white-space:nowrap}
+/* 强制断行只在宽屏生效，窄屏由词组边界自然决定换行位置 */
+.br-wide{display:none}
+@media (min-width:768px){.br-wide{display:inline}}
+.hero__lede{
+  font-size:17px;line-height:1.85;color:var(--graphite);
+  max-width:44em;margin-bottom:var(--s-xl);
+}
+.hero__lede strong{color:var(--ink);font-weight:500}
+
+/* 数据概览 */
+.stats{
+  display:grid;gap:var(--s-sm);
+  grid-template-columns:repeat(auto-fit,minmax(132px,1fr));
+  max-width:720px;margin-bottom:var(--s-xl);
+}
+.stat{
+  background:var(--surface);border:1px solid var(--hairline);
+  border-radius:var(--r-lg);padding:var(--s-md) var(--s-md) 16px;
+}
+.stat__num{
+  font-family:var(--f-mono);font-size:26px;line-height:1.1;
+  color:var(--deep);display:block;margin-bottom:var(--s-2xs);
+}
+.stat__num--accent{color:var(--buoy)}
+.stat__label{font-size:12.5px;color:var(--mist);line-height:1.4;display:block}
+
+/* 图例 */
+.legend{
+  display:flex;flex-wrap:wrap;gap:var(--s-lg);
+  padding-top:var(--s-lg);border-top:1px solid var(--hairline);
+}
+.legend__item{display:flex;align-items:center;gap:var(--s-xs);font-size:13.5px;color:var(--graphite)}
+.legend__title{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;
+  color:var(--mist);text-transform:uppercase;margin-right:var(--s-2xs);
+}
+
+/* 状态点 · 色彩 + 形状双编码 */
+.dot{
+  width:10px;height:10px;border-radius:var(--r-pill);
+  border:1.5px solid currentColor;flex:0 0 auto;position:relative;
+}
+.dot--swim{color:var(--swim);background:currentColor}
+.dot--caution{color:var(--caution);background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
+.dot--nogo{color:var(--nogo);background:transparent}
+.dot--nogo::after{
+  content:"";position:absolute;left:50%;top:50%;
+  width:13px;height:1.5px;background:currentColor;border-radius:1px;
+  transform:translate(-50%,-50%) rotate(-45deg);
+}
+
+/* ============================================================
+   过滤条
+   ============================================================ */
+.filters{
+  max-width:1240px;margin:0 auto;padding:var(--s-lg) var(--s-lg) var(--s-sm);
+  display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-xs);
+}
+.filters__label{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;
+  color:var(--mist);text-transform:uppercase;margin-right:var(--s-2xs);
+}
+.chip{
+  display:inline-flex;align-items:center;gap:8px;
+  height:34px;padding:0 var(--s-sm);
+  background:var(--surface);border:1px solid var(--hairline);
+  border-radius:var(--r-md);font-size:13.5px;color:var(--graphite);
+  transition:border-color .2s ease,background .2s ease,color .2s ease;
+}
+.chip:hover{border-color:var(--hairline-strong);color:var(--ink)}
+.chip[aria-pressed="true"]{
+  background:var(--deep);border-color:var(--deep);color:#fff;font-weight:500;
+}
+.chip[aria-pressed="true"] .dot{border-color:currentColor}
+.chip[aria-pressed="true"] .dot--swim{color:#fff;background:currentColor}
+.chip[aria-pressed="true"] .dot--caution{color:#fff;background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
+.chip[aria-pressed="true"] .dot--nogo{color:#fff;background:transparent}
+.chip__count{font-family:var(--f-mono);font-size:11px;opacity:.65}
+.filters__reset{
+  height:34px;padding:0 var(--s-sm);border-radius:var(--r-md);
+  font-size:13.5px;color:var(--deep);border:1px solid transparent;
+  transition:background .2s ease;
+}
+.filters__reset:hover{background:var(--deep-tint)}
+.filters__reset[hidden]{display:none}
+
+/* ============================================================
+   Shell：左侧标尺（桌面） + 内容流
+   ============================================================ */
+.shell{max-width:1240px;margin:0 auto;padding:0 var(--s-lg) var(--s-4xl)}
+@media (min-width:1024px){
+  .shell{
+    display:grid;grid-template-columns:var(--rail-w) minmax(0,1fr);
+    gap:var(--s-3xl);align-items:start;
+  }
+}
+
+/* ---- 海域标尺 ---- */
+.rail{display:none}
+@media (min-width:1024px){
+  .rail{
+    display:block;position:sticky;top:calc(var(--topbar-h) + var(--s-xl));
+    padding-top:var(--s-md);padding-bottom:var(--s-lg);
+  }
+}
+.rail__head{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;
+  color:var(--mist);text-transform:uppercase;margin-bottom:var(--s-md);
+}
+.rail__nav{border-left:1px solid var(--hairline);position:relative}
+.rail__item{
+  display:grid;grid-template-columns:1fr auto;align-items:baseline;
+  gap:var(--s-xs);padding:var(--s-sm) var(--s-md);
+  position:relative;border-left:2px solid transparent;
+  transition:border-color .2s ease,background .2s ease;
+}
+.rail__item:hover{background:var(--surface);border-left-color:var(--hairline-strong)}
+.rail__item[aria-current="true"]{border-left-color:var(--sea-ink);background:var(--surface)}
+.rail__name{
+  font-family:var(--f-display);font-size:21px;line-height:1.3;
+  color:var(--graphite);transition:color .2s ease;
+}
+.rail__item[aria-current="true"] .rail__name,
+.rail__item:hover .rail__name{color:var(--ink)}
+.rail__num{font-family:var(--f-mono);font-size:11px;color:var(--mist)}
+.rail__sub{
+  grid-column:1/-1;font-size:12.5px;color:var(--mist);line-height:1.5;
+  margin-top:-2px;
+}
+.rail__item[aria-current="true"] .rail__sub{color:var(--graphite)}
+.rail__scale{
+  margin-top:var(--s-xl);padding-top:var(--s-md);
+  border-top:1px solid var(--hairline);
+  font-size:12.5px;line-height:1.7;color:var(--mist);
+}
+.rail__scale b{display:block;color:var(--graphite);font-weight:500;margin-bottom:var(--s-2xs)}
+
+/* ---- 移动端海域标签 ---- */
+.seatabs{display:none}
+@media (max-width:1023px){
+  .seatabs{
+    display:flex;gap:var(--s-xs);overflow-x:auto;
+    position:sticky;top:var(--topbar-h);z-index:35;
+    background:rgba(244,247,245,.94);
+    backdrop-filter:saturate(180%) blur(12px);
+    -webkit-backdrop-filter:saturate(180%) blur(12px);
+    border-bottom:1px solid var(--hairline);
+    padding:var(--s-sm) var(--s-lg);
+    margin:0 0 var(--s-md);
+    scrollbar-width:none;
+  }
+  .seatabs::-webkit-scrollbar{display:none}
+  .seatab{
+    flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;
+    height:38px;padding:0 var(--s-md);
+    background:var(--surface);border:1px solid var(--hairline);
+    border-radius:var(--r-md);font-size:14.5px;color:var(--graphite);
+    transition:border-color .2s ease,background .2s ease,color .2s ease;
+  }
+  .seatab__swatch{width:8px;height:8px;border-radius:2px;background:var(--sea);flex:0 0 auto}
+  .seatab[aria-current="true"]{background:var(--deep);border-color:var(--deep);color:#fff;font-weight:500}
+  .seatab__n{font-family:var(--f-mono);font-size:11px;opacity:.7}
+}
+
+/* ============================================================
+   海域分区
+   ============================================================ */
+.seablock{padding-top:var(--s-2xl);scroll-margin-top:calc(var(--topbar-h) + var(--s-lg))}
+.seablock + .seablock{border-top:1px solid var(--hairline);margin-top:var(--s-3xl)}
+@media (max-width:1023px){
+  /* 顶部吸顶栏 56px + 海域标签栏（44px 标签 + 上下 12px 内边距 = 68px） */
+  .seablock{scroll-margin-top:calc(var(--topbar-h) + 68px)}
+}
+.seablock__head{margin-bottom:var(--s-xl)}
+.seablock__eyebrow{
+  display:flex;align-items:center;gap:var(--s-sm);margin-bottom:var(--s-sm);
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;
+  color:var(--mist);text-transform:uppercase;
+}
+.seablock__swatch{
+  width:26px;height:4px;border-radius:var(--r-pill);
+  background:var(--sea);flex:0 0 auto;
+}
+.seablock__title{
+  font-family:var(--f-display);font-weight:400;
+  font-size:clamp(26px,3.4vw,42px);line-height:1.2;letter-spacing:.01em;
+}
+.seablock__title span{color:var(--sea-ink)}
+.seablock__desc{
+  font-size:14.5px;color:var(--graphite);line-height:1.75;
+  max-width:42em;margin-top:var(--s-sm);
+}
+.seablock__count{
+  font-family:var(--f-mono);font-size:12.5px;color:var(--mist);
+  margin-top:var(--s-sm);
+}
+
+.cards{display:grid;gap:var(--s-lg)}
+@media (min-width:1320px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ---- 省份卡片 · 签名泳道线 ---- */
+.pcard{
+  background:var(--surface);border:1px solid var(--hairline);
+  border-radius:var(--r-lg);padding:var(--s-md) var(--s-lg) var(--s-lg);
+  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+.pcard:hover{border-color:var(--deep);box-shadow:var(--sh-md);transform:translateY(-2px)}
+.pcard[hidden]{display:none}
+
+.lane{
+  position:relative;height:16px;border-bottom:1px solid var(--hairline);
+  margin:0 calc(var(--s-lg) * -1) var(--s-md);
+  padding:0 var(--s-lg);
+}
+/* gauge 定义真正的刻度区间：fill 与 buoy 的百分比均相对它解析，
+   这样「满格」恰好落在刻度轨道右端，不会越界 */
+.lane__gauge{
+  position:absolute;left:var(--s-lg);right:var(--s-lg);bottom:5px;height:6px;
+  background-image:repeating-linear-gradient(90deg,var(--hairline) 0 1px,transparent 1px 14px);
+}
+.lane__fill{
+  position:absolute;left:0;top:0;height:100%;
+  width:var(--lane,0%);background:var(--sea);border-radius:0 3px 3px 0;
+  transition:width .3s cubic-bezier(.22,.61,.36,1);
+}
+.lane__buoy{
+  position:absolute;top:50%;left:var(--lane,0%);
+  width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:var(--r-pill);
+  background:var(--buoy);box-shadow:0 0 0 2px var(--surface);
+  transition:left .3s cubic-bezier(.22,.61,.36,1),background .2s ease;
+}
+.pcard:hover .lane__buoy{background:var(--deep)}
+.lane__num{
+  position:absolute;right:var(--s-lg);top:-2px;
+  font-family:var(--f-mono);font-size:11px;color:var(--mist);
+}
+
+.pcard__head{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--s-xs) var(--s-sm);
+  margin-bottom:var(--s-md);
+}
+.pcard__name{font-size:21px;font-weight:500;line-height:1.35;letter-spacing:.01em}
+.pcard__meta{font-family:var(--f-mono);font-size:11px;color:var(--mist)}
+.pcard__flag{
+  display:inline-flex;align-items:center;gap:8px;height:24px;
+  padding:0 8px;border-radius:var(--r-sm);
+  font-size:12.5px;line-height:1;font-weight:400;
+}
+.pcard__flag--caution{background:var(--caution-bg);color:var(--caution)}
+.pcard__flag--mixed{background:var(--deep-tint);color:var(--deep)}
+.pcard__flag--nogo{background:var(--nogo-bg);color:var(--nogo)}
+
+/* ---- 城市条目 ---- */
+.clist{display:grid;gap:var(--s-md)}
+.citem{padding-top:var(--s-md);border-top:1px dashed var(--hairline)}
+.citem:first-child{padding-top:0;border-top:0}
+.citem[hidden]{display:none}
+.citem__head{
+  display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-xs) var(--s-sm);
+  margin-bottom:var(--s-xs);
+}
+.citem__name{font-size:17px;font-weight:500;line-height:1.4}
+.status{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12.5px;line-height:1;padding:4px 8px;
+  border-radius:var(--r-sm);
+}
+.status--swim{background:var(--swim-bg);color:var(--swim)}
+.status--caution{background:var(--caution-bg);color:var(--caution)}
+.status--nogo{background:var(--nogo-bg);color:var(--nogo)}
+
+.btags{display:flex;flex-wrap:wrap;gap:8px;margin-top:var(--s-xs)}
+.btags li{
+  font-size:13.5px;line-height:1.5;color:var(--ink);
+  background:var(--sand);border:1px solid var(--hairline);
+  border-radius:var(--r-sm);padding:4px 8px;
+  transition:border-color .2s ease,background .2s ease;
+}
+.pcard:hover .btags li{border-color:var(--hairline-strong)}
+.btags li.is-hit{background:#FFF1EC;border-color:var(--buoy);color:var(--ink)}
+.citem__note{
+  font-size:13.5px;color:var(--mist);line-height:1.7;
+  margin-top:var(--s-xs);padding-left:12px;border-left:2px solid var(--hairline);
+}
+.citem__note--alert{color:var(--caution);border-left-color:var(--caution)}
+.citem__note--warn{color:var(--nogo);border-left-color:var(--nogo)}
+
+/* ---- 空态 ---- */
+.empty{
+  display:none;padding:var(--s-3xl) var(--s-lg);text-align:center;
+  border:1px dashed var(--hairline-strong);border-radius:var(--r-lg);
+  background:var(--surface);
+}
+.empty.is-on{display:block}
+.empty__title{font-size:21px;font-weight:500;margin-bottom:var(--s-xs)}
+.empty__desc{font-size:14.5px;color:var(--mist)}
+
+/* ============================================================
+   需特别注意面板
+   ============================================================ */
+.notice{
+  margin-top:var(--s-3xl);padding:var(--s-xl);
+  background:var(--surface);border:1px solid var(--hairline);
+  border-radius:var(--r-xl);border-top:3px solid var(--caution);
+}
+.notice__head{margin-bottom:var(--s-lg)}
+.notice__eyebrow{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;
+  color:var(--caution);text-transform:uppercase;margin-bottom:var(--s-xs);
+}
+.notice__title{font-family:var(--f-display);font-size:clamp(22px,2.8vw,30px);line-height:1.25;font-weight:400}
+.notice__desc{font-size:14.5px;color:var(--graphite);line-height:1.8;margin-top:var(--s-xs);max-width:46em}
+.notice__grid{display:grid;gap:var(--s-sm)}
+@media (min-width:768px){.notice__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.nitem{
+  padding:var(--s-md);background:var(--sand);
+  border:1px solid var(--hairline);border-radius:var(--r-lg);
+}
+.nitem__head{display:flex;align-items:center;gap:var(--s-xs);margin-bottom:var(--s-xs)}
+.nitem__name{font-size:16px;font-weight:500;line-height:1.4}
+.nitem__body{font-size:13.5px;color:var(--graphite);line-height:1.75}
+
+/* ============================================================
+   不适合下海 · 折叠
+   ============================================================ */
+.foot-note{
+  margin-top:var(--s-xl);background:var(--surface);
+  border:1px solid var(--hairline);border-radius:var(--r-lg);
+  overflow:hidden;
+}
+.foot-note__toggle{
+  width:100%;display:flex;align-items:center;gap:var(--s-sm);
+  padding:var(--s-md) var(--s-lg);text-align:left;
+  transition:background .2s ease;
+}
+.foot-note__toggle:hover{background:var(--sand)}
+.foot-note__toggle h3{font-size:17px;font-weight:500;line-height:1.4}
+.foot-note__toggle small{
+  font-family:var(--f-mono);font-size:11px;color:var(--mist);margin-left:auto;
+}
+.foot-note__caret{
+  width:11px;height:11px;flex:0 0 auto;color:var(--mist);
+  transition:transform .2s ease;
+}
+.foot-note[data-open="true"] .foot-note__caret{transform:rotate(90deg)}
+.foot-note__panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .26s ease}
+.foot-note[data-open="true"] .foot-note__panel{grid-template-rows:1fr}
+.foot-note__inner{overflow:hidden}
+.foot-note__list{padding:0 var(--s-lg) var(--s-lg);display:grid;gap:var(--s-sm)}
+.foot-note__list li{
+  display:grid;grid-template-columns:auto 1fr;gap:var(--s-sm);
+  font-size:13.5px;color:var(--graphite);line-height:1.75;
+  padding-top:var(--s-sm);border-top:1px dashed var(--hairline);
+}
+.foot-note__list li:first-child{border-top:0;padding-top:0}
+.foot-note__list b{color:var(--ink);font-weight:500;white-space:nowrap}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.site-foot{
+  border-top:1px solid var(--hairline);background:var(--surface);
+  padding:var(--s-2xl) var(--s-lg);
+}
+.site-foot__inner{
+  max-width:1240px;margin:0 auto;
+  display:grid;gap:var(--s-xl);
+}
+@media (min-width:768px){.site-foot__inner{grid-template-columns:1.4fr 1fr}}
+.site-foot h4{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;
+  color:var(--mist);text-transform:uppercase;margin-bottom:var(--s-sm);font-weight:400;
+}
+.site-foot p{font-size:13.5px;color:var(--graphite);line-height:1.8;max-width:44em}
+.site-foot ul{display:grid;gap:8px;font-size:13.5px;color:var(--graphite)}
+.site-foot li{display:flex;gap:var(--s-xs);align-items:flex-start}
+.site-foot li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--hairline-strong);flex:0 0 auto;margin-top:8px}
+.site-foot__bar{
+  max-width:1240px;margin:var(--s-xl) auto 0;padding-top:var(--s-md);
+  border-top:1px solid var(--hairline);
+  font-family:var(--f-mono);font-size:11px;color:var(--mist);
+  display:flex;flex-wrap:wrap;gap:var(--s-xs) var(--s-lg);justify-content:space-between;
+}
+
+/* ============================================================
+   交互状态补全 · hover / active / focus / disabled
+   focus 由全局 :focus-visible 统一提供；此处补齐按下反馈与禁用态
+   ============================================================ */
+.chip:active,.seatab:active,.filters__reset:active{transform:scale(.97)}
+.chip[aria-pressed="true"]:hover{background:var(--deep-hover);border-color:var(--deep-hover)}
+.chip:active{background:var(--deep-tint);border-color:var(--hairline-strong)}
+.chip[aria-pressed="true"]:active{background:var(--deep-hover);color:#fff}
+
+.seatab:hover{border-color:var(--hairline-strong);color:var(--ink)}
+.seatab[aria-current="true"]:hover{border-color:var(--deep);color:#fff}
+.seatab:active{background:var(--deep-tint);color:var(--ink)}
+.seatab[aria-current="true"]:active{background:var(--deep-hover);color:#fff}
+
+.filters__reset:active{background:var(--deep-tint)}
+.foot-note__toggle:active{background:var(--hairline)}
+.rail__item:active{background:var(--deep-tint);border-left-color:var(--deep)}
+/* 清空按钮自身带 translateY(-50%) 居中，active 时不可覆盖 */
+.search__clear:active{background:var(--deep-tint);color:var(--deep)}
+
+button:disabled,.chip:disabled{
+  opacity:.5;cursor:not-allowed;transform:none;pointer-events:none;
+}
+
+/* ============================================================
+   响应式
+   ============================================================ */
+@media (max-width:768px){
+  :root{--topbar-h:56px}
+  .topbar__inner{padding:0 var(--s-md);gap:var(--s-sm)}
+  .brand__sub{display:none}
+  .hero{padding:var(--s-2xl) var(--s-md) var(--s-xl)}
+  .hero h1{font-size:clamp(25px,8.1vw,38px);max-width:15em}
+  .shell{padding:0 var(--s-md) var(--s-2xl)}
+  .filters{padding:var(--s-md) var(--s-md) var(--s-xs)}
+  .seatabs{padding:var(--s-sm) var(--s-md);margin:0 0 var(--s-md)}
+  .seablock + .seablock{margin-top:var(--s-2xl)}
+  .pcard{padding:var(--s-md) var(--s-md) var(--s-md)}
+  .lane{margin:0 calc(var(--s-md) * -1) var(--s-sm);padding:0 var(--s-md)}
+  .lane__gauge{left:var(--s-md);right:var(--s-md)}
+  .lane__num{right:var(--s-md)}
+  .notice{padding:var(--s-lg) var(--s-md);margin-top:var(--s-2xl)}
+  .foot-note__toggle,.foot-note__list{padding-left:var(--s-md);padding-right:var(--s-md)}
+  .site-foot{padding:var(--s-xl) var(--s-md)}
+
+  /* 触控目标统一到 ≥44px（WCAG 2.5.5 / Apple HIG） */
+  .chip,.seatab,.filters__reset{min-height:44px}
+  .search input{height:44px}
+  .search__clear{width:44px;height:44px;right:0}
+}
+
+/* ============================================================
+   降低动效
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要内容</a>
+
+<header class="topbar" id="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="#top">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span>
+        <span class="brand__name">下海</span>
+        <span class="brand__sub">Sea Bathing Index</span>
+      </span>
+    </a>
+    <div class="search" id="searchWrap">
+      <svg class="search__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="7" cy="7" r="4.6" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M10.6 10.6L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <label class="sr-only" for="q">搜索城市或浴场名称</label>
+      <input id="q" type="search" placeholder="搜城市或浴场，如「付家庄」" autocomplete="off">
+      <button class="search__clear" type="button" id="clearQ" aria-label="清空搜索">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" aria-labelledby="heroTitle">
+    <p class="hero__kicker">China Sea Bathing Beaches · 按能不能真的下水排序</p>
+    <h1 id="heroTitle"><span class="nb">有海岸线的城市很多，</span><br class="br-wide"><span class="nb">能<em>真的下海游泳</em>的</span><span class="nb">没那么多。</span></h1>
+    <p class="hero__lede">
+      这份索引只收一个标准：<strong>有正规海滨浴场、允许下海游泳</strong>。
+      沿海省级行政区逐个核查过，凡是只有观景步道、滩涂、生态公园或人工水池的地方，一律另列说明——不混进能下水的名单里。
+    </p>
+
+    <div class="stats">
+      <div class="stat"><span class="stat__num">14</span><span class="stat__label">省级行政区<br>有正规浴场</span></div>
+      <div class="stat"><span class="stat__num">56</span><span class="stat__label">城市与区<br>可下海游泳</span></div>
+      <div class="stat"><span class="stat__num">4</span><span class="stat__label">海域分区<br>渤海黄海东海南海</span></div>
+      <div class="stat"><span class="stat__num stat__num--accent">5</span><span class="stat__label">处易混淆<br>人工或受限水域</span></div>
+    </div>
+
+    <div class="legend">
+      <span class="legend__title">下海资格</span>
+      <span class="legend__item"><i class="dot dot--swim"></i>天然浴场 · 可下海游泳</span>
+      <span class="legend__item"><i class="dot dot--caution"></i>人工或受限 · 需看泳期与旗号</span>
+      <span class="legend__item"><i class="dot dot--nogo"></i>禁止下水 · 仅可观景或玩水</span>
+    </div>
+  </section>
+
+  <!-- ===================== 移动端海域标签 ===================== -->
+  <nav class="seatabs" id="seatabs" aria-label="海域快速跳转">
+    <a class="seatab" href="#bohai" style="--sea:var(--sea-bohai);--sea-ink:var(--sea-bohai-ink)" data-tab="bohai"><span class="seatab__swatch"></span>渤海<span class="seatab__n">4</span></a>
+    <a class="seatab" href="#huanghai" style="--sea:var(--sea-huanghai);--sea-ink:var(--sea-huanghai-ink)" data-tab="huanghai"><span class="seatab__swatch"></span>黄海<span class="seatab__n">3</span></a>
+    <a class="seatab" href="#donghai" style="--sea:var(--sea-donghai);--sea-ink:var(--sea-donghai-ink)" data-tab="donghai"><span class="seatab__swatch"></span>东海<span class="seatab__n">4</span></a>
+    <a class="seatab" href="#nanhai" style="--sea:var(--sea-nanhai);--sea-ink:var(--sea-nanhai-ink)" data-tab="nanhai"><span class="seatab__swatch"></span>南海<span class="seatab__n">5</span></a>
+  </nav>
+
+  <!-- ===================== 过滤条 ===================== -->
+  <div class="filters" role="group" aria-labelledby="filterLabel">
+    <span class="filters__label" id="filterLabel">筛选</span>
+    <button class="chip" type="button" data-filter="swim" aria-pressed="false"><i class="dot dot--swim"></i>可下海<span class="chip__count" data-count="swim"></span></button>
+    <button class="chip" type="button" data-filter="caution" aria-pressed="false"><i class="dot dot--caution"></i>人工受限<span class="chip__count" data-count="caution"></span></button>
+    <button class="chip" type="button" data-filter="nogo" aria-pressed="false"><i class="dot dot--nogo"></i>禁止下水<span class="chip__count" data-count="nogo"></span></button>
+    <button class="filters__reset" type="button" id="resetAll" hidden>清除筛选</button>
+  </div>
+
+  <div class="shell">
+
+    <!-- ===================== 桌面端海域标尺 ===================== -->
+    <aside class="rail" aria-label="海域索引">
+      <p class="rail__head">海域 / Sea Area</p>
+      <nav class="rail__nav" id="railNav">
+        <a class="rail__item" href="#bohai" data-tab="bohai" style="--sea:var(--sea-bohai);--sea-ink:var(--sea-bohai-ink)">
+          <span class="rail__name">渤海</span><span class="rail__num">01 · 2 省</span>
+          <span class="rail__sub">内海 · 浪小滩缓，北方暑期主力</span>
+        </a>
+        <a class="rail__item" href="#huanghai" data-tab="huanghai" style="--sea:var(--sea-huanghai);--sea-ink:var(--sea-huanghai-ink)">
+          <span class="rail__name">黄海</span><span class="rail__num">02 · 3 省</span>
+          <span class="rail__sub">浴场最密集，大连一城领先全国</span>
+        </a>
+        <a class="rail__item" href="#donghai" data-tab="donghai" style="--sea:var(--sea-donghai);--sea-ink:var(--sea-donghai-ink)">
+          <span class="rail__name">东海</span><span class="rail__num">03 · 4 省区</span>
+          <span class="rail__sub">岛屿浴场为主，水质分化较大</span>
+        </a>
+        <a class="rail__item" href="#nanhai" data-tab="nanhai" style="--sea:var(--sea-nanhai);--sea-ink:var(--sea-nanhai-ink)">
+          <span class="rail__name">南海</span><span class="rail__num">04 · 5 省区</span>
+          <span class="rail__sub">全年可下水，洲岛沙滩质量最高</span>
+        </a>
+      </nav>
+      <div class="rail__scale">
+        <b>泳道线读法</b>
+        卡片顶部横线长度＝该省级行政区收录的浴场数量，最长者满格。线端橙色浮标即计数值。
+      </div>
+    </aside>
+
+    <div class="content" id="content">
+
+      <!-- ============ 渤海 ============ -->
+      <section class="seablock" id="bohai" style="--sea:var(--sea-bohai);--sea-ink:var(--sea-bohai-ink)" aria-labelledby="bohaiT">
+        <header class="seablock__head">
+          <p class="seablock__eyebrow"><span class="seablock__swatch"></span>Sea Area 01 · 渤海</p>
+          <h2 class="seablock__title" id="bohaiT">渤海 · <span>内海浴场</span></h2>
+          <p class="seablock__desc">三面环陆的内海，涌浪小、滩面平缓，是北方暑期最稳妥的下海区域。河北一侧浴场最密，天津只有人工沙滩，鲁北沿岸则以滩涂为主。</p>
+          <p class="seablock__count">2 个省级行政区 · 4 座城市 · 13 处浴场</p>
+        </header>
+
+        <div class="cards">
+
+          <article class="pcard" data-search="河北 秦皇岛 北戴河 唐山 沧州 老虎石 平水桥 浅水湾 东山 南戴河 天马 昌黎 黄金海岸 碧海 金银滩 祥云湾 乐亭 曹妃甸 揽月湾 黄骅港 金沙滩">
+            <div class="lane" aria-hidden="true" style="--lane:50%">
+              <span class="lane__gauge"><span class="lane__fill"></span><span class="lane__buoy"></span></span><span class="lane__num">12 处</span>
+            </div>
+            <header class="pcard__head">
+              <h3 class="pcard__name">河北</h3>
+              <span class="pcard__meta">3 市 · 12 处</span>
+            </header>
+            <ul class="clist">
+              <li class="citem" data-status="swim" data-search="秦皇岛 北戴河 老虎石 平水桥 浅水湾 东山 南戴河 天马浴场 昌黎 黄金海岸">
+                <div class="citem__head">
+                  <h4 class="citem__name">秦皇岛</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags">
+                  <li>北戴河老虎石</li><li>平水桥</li><li>浅水湾</li><li>东山</li><li>南戴河天马浴场</li><li>昌黎黄金海岸</li>
+                </ul>
+                <p class="citem__note">北戴河一带浴场连片，老虎石、平水桥、浅水湾、东山都在其中，是京津冀暑期首选。</p>
+              </li>
+              <li class="citem" data-status="swim" data-search="唐山 乐亭 碧海浴场 浅水湾浴场 金银滩 祥云湾 曹妃甸 揽月湾">
+                <div class="citem__head">
+                  <h4 class="citem__name">唐山</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags">
+                  <li>碧海浴场</li><li>浅水湾浴场</li><li>金银滩浴场</li><li>祥云湾浴场</li><li>曹妃甸揽月湾</li>
+                </ul>
+                <p class="citem__note">前四处集中在乐亭县，曹妃甸另属揽月湾旅游景区。唐山容易在名单里被漏掉，实际是可下海的。</p>
+              </li>
+              <li class="citem" data-status="swim" data-search="沧州 黄骅港 金沙滩 人工沙滩">
+                <div class="citem__head">
+                  <h4 class="citem__name">沧州</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>黄骅港金沙滩</li></ul>
+                <p class="citem__note">全国最大的人工沙滩，海岸线约 21 公里。虽为人工铺沙，但设有正规浴场、可下水。</p>
+              </li>
+            </ul>
+          </article>
+
+          <article class="pcard" data-search="天津 东疆湾 沙滩 人工沙滩 游泳区">
+            <div class="lane" aria-hidden="true" style="--lane:4%">
+              <span class="lane__gauge"><span class="lane__fill"></span><span class="lane__buoy"></span></span><span class="lane__num">1 处</span>
+            </div>
+            <header class="pcard__head">
+              <h3 class="pcard__name">天津</h3>
+              <span class="pcard__meta">1 市 · 1 处</span>
+              <span class="pcard__flag pcard__flag--caution"><i class="dot dot--caution"></i>仅人工沙滩</span>
+            </header>
+            <ul class="clist">
+              <li class="citem" data-status="caution" data-search="天津 东疆湾 沙滩 人工沙滩 游泳区 旺季">
+                <div class="citem__head">
+                  <h4 class="citem__name">东疆湾</h4>
+                  <span class="status status--caution"><i class="dot dot--caution"></i>人工受限</span>
+                </div>
+                <ul class="btags"><li>东疆湾沙滩</li></ul>
+                <p class="citem__note citem__note--alert">人工沙滩，设有游泳区。旺季（4—10 月）可下水，非旺季不开放游泳。</p>
+              </li>
+            </ul>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ============ 黄海 ============ -->
+      <section class="seablock" id="huanghai" style="--sea:var(--sea-huanghai);--sea-ink:var(--sea-huanghai-ink)" aria-labelledby="huanghaiT">
+        <header class="seablock__head">
+          <p class="seablock__eyebrow"><span class="seablock__swatch"></span>Sea Area 02 · 黄海</p>
+          <h2 class="seablock__title" id="huanghaiT">黄海 · <span>浴场最密集</span></h2>
+          <p class="seablock__desc">从辽东半岛一路到江苏北部。大连一城的浴场数量全国领先，山东半岛的青岛、烟台、威海、日照连成一条可下海的连续带。</p>
+          <p class="seablock__count">3 个省级行政区 · 12 座城市 · 35 处浴场</p>
+        </header>
+
+        <div class="cards">
+
+          <article class="pcard" data-search="辽宁 大连 营口 锦州 葫芦岛 盘锦 棒棰岛 付家庄 星海湾 金石滩 黄金海岸 泊石湾 夏家河 仙浴湾 月牙湾 白沙湾 孙家湾 清沟湾 十里金沙滩 兴城 313 绥中 东戴河 金帛滩 辽河入海口">
+            <div class="lane" aria-hidden="true" style="--lane:71%">
+              <span class="lane__gauge"><span class="lane__fill"></span><span class="lane__buoy"></span></span><span class="lane__num">17 处</span>
+            </div>
+            <header class="pcard__head">
+              <h3 class="pcard__name">辽宁</h3>
+              <span class="pcard__meta">5 市 · 17 处</span>
+              <span class="pcard__flag pcard__flag--mixed">跨海域</span>
+            </header>
+            <ul class="clist">
+              <li class="citem" data-status="swim" data-search="大连 棒棰岛 付家庄 星海湾 金石滩 黄金海岸 泊石湾 夏家河 仙浴湾">
+                <div class="citem__head">
+                  <h4 class="citem__name">大连</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags">
+                  <li>棒棰岛</li><li>付家庄</li><li>星海湾</li><li>金石滩（黄金海岸）</li><li>泊石湾</li><li>夏家河</li><li>仙浴湾</li>
+                </ul>
+                <p class="citem__note">浴场数量全国领先，南侧属黄海、北侧夏家河一带属渤海。</p>
+              </li>
+              <li class="citem" data-status="swim" data-search="营口 月牙湾 白沙湾 黄金海岸">
+                <div class="citem__head">
+                  <h4 class="citem__name">营口</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>月牙湾浴场</li><li>白沙湾黄金海岸</li></ul>
+                <p class="citem__note">白沙湾黄金海岸约 3.2 公里海岸线，沙质细软、滩平浪缓，适合带小孩。</p>
+              </li>
+              <li class="citem" data-status="swim" data-search="锦州 孙家湾 清沟湾 白沙湾 十里金沙滩">
+                <div class="citem__head">
+                  <h4 class="citem__name">锦州</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>孙家湾浴场</li><li>清沟湾</li><li>白沙湾</li><li>十里金沙滩</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="葫芦岛 兴城 313 绥中 东戴河">
+                <div class="citem__head">
+                  <h4 class="citem__name">葫芦岛</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>兴城海滨浴场</li><li>313 海滨浴场</li><li>绥中东戴河海水浴场</li></ul>
+              </li>
+              <li class="citem" data-status="caution" data-search="盘锦 金帛滩 海洋乐园 辽河入海口 人工沙滩">
+                <div class="citem__head">
+                  <h4 class="citem__name">盘锦</h4>
+                  <span class="status status--caution"><i class="dot dot--caution"></i>人工受限</span>
+                </div>
+                <ul class="btags"><li>金帛滩海洋乐园</li></ul>
+                <p class="citem__note citem__note--alert">辽河入海口唯一的海滨浴场，人工沙滩约 1600 米。</p>
+              </li>
+            </ul>
+          </article>
+
+          <article class="pcard" data-search="山东 青岛 烟台 威海 日照 潍坊 第一海水浴场 金沙滩 石老人 仰口 开发区 养马岛 海阳 凤城 万米海滩 国际海水浴场 荣成 滨海公园 那香海 钻石沙滩 万平口 山海天 海滨国家森林公园 欢乐海">
+            <div class="lane" aria-hidden="true" style="--lane:63%">
+              <span class="lane__gauge"><span class="lane__fill"></span><span class="lane__buoy"></span></span><span class="lane__num">15 处</span>
+            </div>
+            <header class="pcard__head">
+              <h3 class="pcard__name">山东</h3>
+              <span class="pcard__meta">5 市 · 15 处</span>
+              <span class="pcard__flag pcard__flag--mixed">跨海域</span>
+            </header>
+            <ul class="clist">
+              <li class="citem" data-status="swim" data-search="青岛 第一海水浴场 金沙滩 石老人 仰口">
+                <div class="citem__head">
+                  <h4 class="citem__name">青岛</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>第一海水浴场</li><li>金沙滩</li><li>石老人</li><li>仰口</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="烟台 第一海水浴场 开发区 金沙滩 养马岛 海阳 凤城 万米海滩">
+                <div class="citem__head">
+                  <h4 class="citem__name">烟台</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>第一海水浴场</li><li>开发区金沙滩</li><li>养马岛</li><li>海阳凤城万米海滩</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="威海 国际海水浴场 荣成 滨海公园 那香海 钻石沙滩">
+                <div class="citem__head">
+                  <h4 class="citem__name">威海</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>国际海水浴场</li><li>荣成滨海公园浴场</li><li>那香海钻石沙滩</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="日照 万平口 山海天 海滨国家森林公园">
+                <div class="citem__head">
+                  <h4 class="citem__name">日照</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>万平口浴场</li><li>山海天浴场</li><li>海滨国家森林公园浴场</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="潍坊 欢乐海沙滩">
+                <div class="citem__head">
+                  <h4 class="citem__name">潍坊</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>欢乐海沙滩</li></ul>
+                <p class="citem__note">潍坊位于渤海莱州湾南岸，本页按主要浴场分布归入黄海—渤海过渡区。</p>
+              </li>
+            </ul>
+          </article>
+
+          <article class="pcard" data-search="江苏 连云港 连岛 大沙湾 苏马湾 赣榆 海州湾 度假区 南通 启东 碧海银沙 人工沙滩 禁止下水 无边泳池">
+            <div class="lane" aria-hidden="true" style="--lane:13%">
+              <span class="lane__gauge"><span class="lane__fill"></span><span class="lane__buoy"></span></span><span class="lane__num">3 处</span>
+            </div>
+            <header class="pcard__head">
+              <h3 class="pcard__name">江苏</h3>
+              <span class="pcard__meta">2 市 · 3 处</span>
+              <span class="pcard__flag pcard__flag--mixed">含禁止下水</span>
+            </header>
+            <ul class="clist">
+              <li class="citem" data-status="swim" data-search="连云港 连岛 大沙湾 苏马湾 赣榆 海州湾 度假区">
+                <div class="citem__head">
+                  <h4 class="citem__name">连云港</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>连岛（大沙湾、苏马湾）</li><li>赣榆海州湾旅游度假区</li></ul>
+                <p class="citem__note">赣榆海州湾有约 4 公里沙滩浴场。</p>
+              </li>
+              <li class="citem" data-status="nogo" data-search="南通 启东 碧海银沙 人工沙滩 禁止下水 无边泳池 玩水">
+                <div class="citem__head">
+                  <h4 class="citem__name">南通</h4>
+                  <span class="status status--nogo"><i class="dot dot--nogo"></i>禁止下水</span>
+                </div>
+                <ul class="btags"><li>启东碧海银沙</li></ul>
+                <p class="citem__note citem__note--warn">虽为人工沙滩，但海滨浴场全天禁止下水游泳，仅有无边泳池可玩水——不符合「下海游泳」标准。</p>
+              </li>
+            </ul>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ============ 东海 ============ -->
+      <section class="seablock" id="donghai" style="--sea:var(--sea-donghai);--sea-ink:var(--sea-donghai-ink)" aria-labelledby="donghaiT">
+        <header class="seablock__head">
+          <p class="seablock__eyebrow"><span class="seablock__swatch"></span>Sea Area 03 · 东海</p>
+          <h2 class="seablock__title" id="donghaiT">东海 · <span>岛屿与大陆岸线</span></h2>
+          <p class="seablock__desc">浙江、福建以岛屿和半岛浴场为主力，福建的海湾沙质普遍好于浙江。上海只有人工围海净化水域，另列说明。</p>
+          <p class="seablock__count">4 个省级行政区 · 17 座城市 · 38 处浴场</p>
+        </header>
+
+        <div class="cards">
+
+          <article class="pcard" data-search="上海 金山 城市沙滩 奉贤 碧海金沙 人工围海 净化 泳期">
+            <div class="lane" aria-hidden="true" style="--lane:8%">
+              <span class="lane__gauge"><span class="lane__fill"></span><span class="lane__buoy"></span></span><span class="lane__num">2 处</span>
+            </div>
+            <header class="pcard__head">
+              <h3 class="pcard__name">上海</h3>
+              <span class="pcard__meta">1 市 · 2 处</span>
+              <span class="pcard__flag pcard__flag--caution"><i class="dot dot--caution"></i>仅人工水域</span>
+            </header>
+            <ul class="clist">
+              <li class="citem" data-status="caution" data-search="上海 金山 城市沙滩 奉贤 碧海金沙 人工围海 净化 泳期 六月 九月">
+                <div class="citem__head">
+                  <h4 class="citem__name">金山 / 奉贤</h4>
+                  <span class="status status--caution"><i class="dot dot--caution"></i>人工受限</span>
+                </div>
+                <ul class="btags"><li>金山城市沙滩</li><li>奉贤碧海金沙</li></ul>
+                <p class="citem__note citem__note--alert">均为人工围海净化后的水域，不是天然海滨浴场。泳期通常为 6 月至 9 月。</p>
+              </li>
+            </ul>
+          </article>
+
+          <article class="pcard" data-search="浙江 舟山 朱家尖 南沙 东沙 嵊泗 基湖沙滩 普陀山 千步沙 百步沙 宁波 象山 松兰山 台州 温岭 金沙滩 玉环 后沙 温州 渔寮 大沙滩 南麂 大沙岙 洞头 嘉兴 九龙山 东沙湾 铁板沙">
+            <div class="lane" aria-hidden="true" style="--lane:42%">
+              <span class="lane__gauge"><span class="lane__fill"></span><span class="lane__buoy"></span></span><span class="lane__num">10 处</span>
+            </div>
+            <header class="pcard__head">
+              <h3 class="pcard__name">浙江</h3>
+              <span class="pcard__meta">5 市 · 10 处</span>
+            </header>
+            <ul class="clist">
+              <li class="citem" data-status="swim" data-search="舟山 朱家尖 南沙 东沙 嵊泗 基湖沙滩 普陀山 千步沙 百步沙">
+                <div class="citem__head">
+                  <h4 class="citem__name">舟山</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>朱家尖南沙 / 东沙浴场</li><li>嵊泗基湖沙滩浴场</li><li>普陀山千步沙 / 百步沙</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="宁波 象山 松兰山">
+                <div class="citem__head">
+                  <h4 class="citem__name">宁波</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>象山松兰山海滨浴场</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="台州 温岭 金沙滩 玉环 后沙 度假区">
+                <div class="citem__head">
+                  <h4 class="citem__name">台州</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>温岭金沙滩浴场</li><li>玉环后沙海滨度假区</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="温州 渔寮 大沙滩 南麂 大沙岙 洞头">
+                <div class="citem__head">
+                  <h4 class="citem__name">温州</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>渔寮大沙滩浴场</li><li>南麂大沙岙浴场</li><li>洞头大沙岙浴场</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="嘉兴 九龙山 东沙湾 铁板沙 浴区面积">
+                <div class="citem__head">
+                  <h4 class="citem__name">嘉兴</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>九龙山海滨浴场（东沙湾）</li></ul>
+                <p class="citem__note">东沙湾史称「铁板沙」，浴区面积 50 余万平方米。</p>
+              </li>
+            </ul>
+          </article>
+
+          <article class="pcard" data-search="福建 福州 长乐 下沙 海滨度假村 宁德 福鼎 小白鹭 牛郎岗 霞浦 高罗 莆田 湄洲岛 鹅尾 九宝澜 黄金沙滩 泉州 惠安 青山湾 崇武 西沙湾 半月沉湾 厦门 鼓浪屿 曾厝垵 黄厝 椰风寨 观音山 漳州 东山 马銮湾 白塘湾 心月沙滩">
+            <div class="lane" aria-hidden="true" style="--lane:67%">
+              <span class="lane__gauge"><span class="lane__fill"></span><span class="lane__buoy"></span></span><span class="lane__num">16 处</span>
+            </div>
+            <header class="pcard__head">
+              <h3 class="pcard__name">福建</h3>
+              <span class="pcard__meta">6 市 · 16 处</span>
+            </header>
+            <ul class="clist">
+              <li class="citem" data-status="swim" data-search="福州 长乐 下沙 海滨度假村 八公里">
+                <div class="citem__head">
+                  <h4 class="citem__name">福州</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>长乐下沙海滨度假村</li></ul>
+                <p class="citem__note">约 8 公里海滩，可同时容纳上万人下海。</p>
+              </li>
+              <li class="citem" data-status="swim" data-search="宁德 福鼎 小白鹭 牛郎岗 霞浦 高罗海滩">
+                <div class="citem__head">
+                  <h4 class="citem__name">宁德</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>福鼎小白鹭海滨浴场</li><li>牛郎岗海滨浴场</li><li>霞浦高罗海滩</li></ul>
+                <p class="citem__note">整体仍以滩涂养殖和礁石海岸为主，浴场集中在这几处。</p>
+              </li>
+              <li class="citem" data-status="swim" data-search="莆田 湄洲岛 鹅尾 九宝澜 黄金沙滩">
+                <div class="citem__head">
+                  <h4 class="citem__name">莆田</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>湄洲岛鹅尾海滨浴场</li><li>九宝澜黄金沙滩</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="泉州 惠安 青山湾 崇武 西沙湾 半月沉湾">
+                <div class="citem__head">
+                  <h4 class="citem__name">泉州</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>惠安青山湾</li><li>崇武西沙湾</li><li>半月沉湾</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="厦门 鼓浪屿 曾厝垵 黄厝 椰风寨 观音山">
+                <div class="citem__head">
+                  <h4 class="citem__name">厦门</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>鼓浪屿</li><li>曾厝垵</li><li>黄厝</li><li>椰风寨</li><li>观音山</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="漳州 东山 马銮湾 白塘湾 心月沙滩">
+                <div class="citem__head">
+                  <h4 class="citem__name">漳州</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>东山马銮湾海水浴场</li><li>白塘湾心月沙滩海滨浴场</li></ul>
+              </li>
+            </ul>
+          </article>
+
+          <article class="pcard" data-search="中国台湾 台湾 新北 福隆 白沙湾 万里 金山 高雄 旗津 西子湾 基隆 外木山 和平岛 浮潜 台中 大安 滨海乐园 屏东 垦丁">
+            <div class="lane" aria-hidden="true" style="--lane:42%">
+              <span class="lane__gauge"><span class="lane__fill"></span><span class="lane__buoy"></span></span><span class="lane__num">10 处</span>
+            </div>
+            <header class="pcard__head">
+              <h3 class="pcard__name">中国台湾</h3>
+              <span class="pcard__meta">5 市 · 10 处</span>
+              <span class="pcard__flag pcard__flag--mixed">南部属南海</span>
+            </header>
+            <ul class="clist">
+              <li class="citem" data-status="swim" data-search="新北 福隆 白沙湾 万里 金山">
+                <div class="citem__head">
+                  <h4 class="citem__name">新北</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>福隆海水浴场</li><li>白沙湾海水浴场</li><li>万里海水浴场</li><li>金山海水浴场</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="基隆 外木山 和平岛 浮潜">
+                <div class="citem__head">
+                  <h4 class="citem__name">基隆</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>外木山</li><li>和平岛</li></ul>
+                <p class="citem__note">和平岛可游泳、可浮潜。</p>
+              </li>
+              <li class="citem" data-status="swim" data-search="台中 大安 滨海乐园 旗号">
+                <div class="citem__head">
+                  <h4 class="citem__name">台中</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>大安滨海乐园</li></ul>
+                <p class="citem__note">可下水，但需注意当日旗号等级。</p>
+              </li>
+              <li class="citem" data-status="swim" data-search="高雄 旗津 西子湾">
+                <div class="citem__head">
+                  <h4 class="citem__name">高雄</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>旗津海水浴场</li><li>西子湾海水浴场</li></ul>
+                <p class="citem__note">位于岛内西南侧，海区归属南海。</p>
+              </li>
+              <li class="citem" data-status="swim" data-search="屏东 垦丁">
+                <div class="citem__head">
+                  <h4 class="citem__name">屏东</h4>
+                  <span class="status status--swim"><i class="dot dot--swim"></i>可下海</span>
+                </div>
+                <ul class="btags"><li>垦丁海水浴场</li></ul>
+                <p class="citem__note">位于岛内最南端，海区归属南海。</p>
+              </li>
+            </ul>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ============ 南海 ============ -->
+      <section class="seablock" id="nanhai" style="--sea:var(--sea-nanhai);--sea-ink:var(--sea-nanhai-ink)" aria-labelledby="nanhaiT">
+        <header class="seablock__head">
+          <p class="seablock__eyebrow"><span class="seablock__swatch"></span>Sea Area 04 · 南海</p>
+          <h2 class="seablock__title" id="nanhaiT">南海 · <span>全年可下水</span></h2>
+          <p class="seablock__desc">广东、广西、海南三省区浴场最集中，海南与广东部分海域全年可下水。中国香港、中国澳门的泳滩管理规范，有明确泳季和救生员值守。</p>
+          <p class="seablock__count">5 个省级行政区 · 23 座城市与区 · 54 处浴场</p>
+        </header>
+
+        <div class="cards">
+
+          <article class="pcard" data-search="广东 潮州 饶平 金狮湾 度假村 东沙湾 东方夏威夷 汕头 南澳 青澳湾 惠州 巽寮湾 A级 大亚湾 黄金海岸 熊猫金海岸 深圳 大梅沙 大鹏湾 下沙 西涌 珠海 东澳岛 南沙湾 飞沙滩 金沙滩 江门 下川岛 王府洲 黑沙湾 川岛 阳江 闸坡 大角湾 十里银滩 北洛湾 沙扒湾 茂名 中国第一滩 湛江 金沙湾 东海岛 汕尾 红海湾 陆丰 金厢滩">
+            <div class="lane" aria-hidden="true" style="--lane:100%">
+              <span class="lane__gauge"><span class="lane__fill"></span><span class="lane__buoy"></span></span><span class="lane__num">24 处</span>
+            </div>
+            <header class="pcard__head">
+              <h3 class="pcard__name">广东</h3>
+              <span class="pcard__meta">10 市 · 24 处</span>
+              <span class="pcard__flag pcard__flag--mixed">最多浴场</span>
+            </header>
+            <ul class="clist">
+              <li class="citem" data-status="swim" data-search="潮州 饶平 金狮湾 度假村 东沙湾 东方夏威夷">
+                <div class="citem__head"><h4 class="citem__name">潮州</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>饶平金狮湾度假村海水浴场</li><li>东沙湾</li></ul>
+                <p class="citem__note">东沙湾有「东方夏威夷」之称。</p>
+              </li>
+              <li class="citem" data-status="swim" data-search="汕头 南澳 青澳湾">
+                <div class="citem__head"><h4 class="citem__name">汕头</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>南澳青澳湾海水浴场</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="惠州 巽寮湾 A级 大亚湾 黄金海岸 熊猫金海岸">
+                <div class="citem__head"><h4 class="citem__name">惠州</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>巽寮湾（A 级海滨浴场）</li><li>大亚湾黄金海岸</li><li>熊猫金海岸</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="深圳 大梅沙 大鹏湾 下沙 西涌">
+                <div class="citem__head"><h4 class="citem__name">深圳</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>大梅沙</li><li>大鹏湾下沙</li><li>西涌</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="珠海 东澳岛 南沙湾 飞沙滩 金沙滩">
+                <div class="citem__head"><h4 class="citem__name">珠海</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>东澳岛南沙湾</li><li>飞沙滩</li><li>金沙滩</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="江门 下川岛 王府洲 黑沙湾 川岛 飞沙滩">
+                <div class="citem__head"><h4 class="citem__name">江门</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>下川岛王府洲海滨沙滩</li><li>黑沙湾</li><li>川岛飞沙滩</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="阳江 闸坡 大角湾 十里银滩 北洛湾 沙扒湾">
+                <div class="citem__head"><h4 class="citem__name">阳江</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>闸坡大角湾海水浴场</li><li>十里银滩</li><li>北洛湾</li><li>沙扒湾</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="茂名 中国第一滩">
+                <div class="citem__head"><h4 class="citem__name">茂名</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>中国第一滩</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="湛江 金沙湾 东海岛">
+                <div class="citem__head"><h4 class="citem__name">湛江</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>金沙湾海滨浴场</li><li>东海岛</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="汕尾 红海湾 陆丰 金厢滩">
+                <div class="citem__head"><h4 class="citem__name">汕尾</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>红海湾</li><li>陆丰金厢滩</li></ul>
+              </li>
+            </ul>
+          </article>
+
+          <article class="pcard" data-search="广西 北海 银滩 天下第一滩 侨港 度假浴场 防城港 西湾 旅游景区 金滩 钦州 三娘湾 人工建设 海中长廊">
+            <div class="lane" aria-hidden="true" style="--lane:21%">
+              <span class="lane__gauge"><span class="lane__fill"></span><span class="lane__buoy"></span></span><span class="lane__num">5 处</span>
+            </div>
+            <header class="pcard__head">
+              <h3 class="pcard__name">广西</h3>
+              <span class="pcard__meta">3 市 · 5 处</span>
+            </header>
+            <ul class="clist">
+              <li class="citem" data-status="swim" data-search="北海 银滩 天下第一滩 侨港 度假浴场">
+                <div class="citem__head"><h4 class="citem__name">北海</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>银滩海水浴场</li><li>侨港度假浴场</li></ul>
+                <p class="citem__note">银滩有「天下第一滩」之称。</p>
+              </li>
+              <li class="citem" data-status="swim" data-search="防城港 西湾 旅游景区 金滩">
+                <div class="citem__head"><h4 class="citem__name">防城港</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>西湾旅游景区沙滩浴场</li><li>金滩海水浴场</li></ul>
+              </li>
+              <li class="citem" data-status="caution" data-search="钦州 三娘湾 人工建设 一公里 海中长廊">
+                <div class="citem__head"><h4 class="citem__name">钦州</h4><span class="status status--caution"><i class="dot dot--caution"></i>人工受限</span></div>
+                <ul class="btags"><li>三娘湾海水浴场</li></ul>
+                <p class="citem__note citem__note--alert">人工建设，有一公里海中长廊。</p>
+              </li>
+            </ul>
+          </article>
+
+          <article class="pcard" data-search="海南 三亚 大东海 亚龙湾 三亚湾 海棠湾 海口 假日海滩 西海岸 滨海浴场 万宁 神州半岛 石梅湾 陵水 清水湾 琼海 博鳌湾">
+            <div class="lane" aria-hidden="true" style="--lane:42%">
+              <span class="lane__gauge"><span class="lane__fill"></span><span class="lane__buoy"></span></span><span class="lane__num">10 处</span>
+            </div>
+            <header class="pcard__head">
+              <h3 class="pcard__name">海南</h3>
+              <span class="pcard__meta">5 市 · 10 处</span>
+            </header>
+            <ul class="clist">
+              <li class="citem" data-status="swim" data-search="三亚 大东海 亚龙湾 三亚湾 海棠湾">
+                <div class="citem__head"><h4 class="citem__name">三亚</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>大东海</li><li>亚龙湾</li><li>三亚湾</li><li>海棠湾</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="海口 假日海滩 西海岸 滨海浴场">
+                <div class="citem__head"><h4 class="citem__name">海口</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>假日海滩</li><li>西海岸滨海浴场</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="万宁 神州半岛 石梅湾">
+                <div class="citem__head"><h4 class="citem__name">万宁</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>神州半岛</li><li>石梅湾</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="陵水 清水湾">
+                <div class="citem__head"><h4 class="citem__name">陵水</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>清水湾</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="琼海 博鳌湾">
+                <div class="citem__head"><h4 class="citem__name">琼海</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>博鳌湾</li></ul>
+              </li>
+            </ul>
+          </article>
+
+          <article class="pcard" data-search="中国香港 香港 南区 浅水湾 深水湾 石澳 赤柱正滩 大浪湾 泳滩 西贡 厦门湾 桥咀 大屿山 贝澳 上长沙 塘福 屯门 荃湾 黄金泳滩 蝴蝶湾 汀九湾">
+            <div class="lane" aria-hidden="true" style="--lane:54%">
+              <span class="lane__gauge"><span class="lane__fill"></span><span class="lane__buoy"></span></span><span class="lane__num">13 处</span>
+            </div>
+            <header class="pcard__head">
+              <h3 class="pcard__name">中国香港</h3>
+              <span class="pcard__meta">4 区 · 13 处</span>
+            </header>
+            <ul class="clist">
+              <li class="citem" data-status="swim" data-search="南区 浅水湾 深水湾 石澳 赤柱正滩 大浪湾">
+                <div class="citem__head"><h4 class="citem__name">南区</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>浅水湾</li><li>深水湾</li><li>石澳</li><li>赤柱正滩</li><li>大浪湾泳滩</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="西贡 厦门湾 桥咀 泳滩">
+                <div class="citem__head"><h4 class="citem__name">西贡</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>厦门湾泳滩</li><li>桥咀泳滩</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="大屿山 贝澳 上长沙 塘福 泳滩">
+                <div class="citem__head"><h4 class="citem__name">大屿山</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>贝澳泳滩</li><li>上长沙泳滩</li><li>塘福泳滩</li></ul>
+              </li>
+              <li class="citem" data-status="swim" data-search="屯门 荃湾 黄金泳滩 蝴蝶湾 汀九湾">
+                <div class="citem__head"><h4 class="citem__name">屯门 / 荃湾</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>黄金泳滩</li><li>蝴蝶湾泳滩</li><li>汀九湾泳滩</li></ul>
+              </li>
+            </ul>
+          </article>
+
+          <article class="pcard" data-search="中国澳门 澳门 路环 黑沙海滩 竹湾海滩 泳季 五月 十月 泳区浮泡 救生员">
+            <div class="lane" aria-hidden="true" style="--lane:8%">
+              <span class="lane__gauge"><span class="lane__fill"></span><span class="lane__buoy"></span></span><span class="lane__num">2 处</span>
+            </div>
+            <header class="pcard__head">
+              <h3 class="pcard__name">中国澳门</h3>
+              <span class="pcard__meta">1 区 · 2 处</span>
+            </header>
+            <ul class="clist">
+              <li class="citem" data-status="swim" data-search="路环 黑沙海滩 竹湾海滩 泳季 五月一日 十月三十一日 泳区浮泡 救生员">
+                <div class="citem__head"><h4 class="citem__name">路环</h4><span class="status status--swim"><i class="dot dot--swim"></i>可下海</span></div>
+                <ul class="btags"><li>黑沙海滩</li><li>竹湾海滩</li></ul>
+                <p class="citem__note">黑沙海滩是中国澳门最大的天然海滨浴场。泳季为 5 月 1 日至 10 月 31 日，设有泳区浮泡和救生员值守。</p>
+              </li>
+            </ul>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ===================== 空态 ===================== -->
+      <div class="empty" id="empty" role="status">
+        <p class="empty__title">没有匹配的浴场</p>
+        <p class="empty__desc">换个城市或浴场名试试，也可以点「清除筛选」回到完整清单。</p>
+      </div>
+
+      <!-- ===================== 需特别注意 ==================== -->
+      <section class="notice" aria-labelledby="noticeT">
+        <header class="notice__head">
+          <p class="notice__eyebrow">Caution · 容易混淆的地方</p>
+          <h2 class="notice__title" id="noticeT">有沙滩，但不等于能下海游泳</h2>
+          <p class="notice__desc">下面这几处经常被写进「海滨浴场」名单，但实际是人工水域、有禁泳规定，或者根本没有面向游客的游泳沙滩。出发前请先确认。</p>
+        </header>
+        <div class="notice__grid">
+          <div class="nitem">
+            <div class="nitem__head"><i class="dot dot--caution"></i><h3 class="nitem__name">上海 · 金山 / 奉贤</h3></div>
+            <p class="nitem__body">金山城市沙滩、奉贤碧海金沙均为人工围海净化后的水域，不是天然海滨浴场。泳期通常为 6 月至 9 月。</p>
+          </div>
+          <div class="nitem">
+            <div class="nitem__head"><i class="dot dot--caution"></i><h3 class="nitem__name">天津 · 东疆湾</h3></div>
+            <p class="nitem__body">人工沙滩，设有游泳区。旺季（4—10 月）可下水。</p>
+          </div>
+          <div class="nitem">
+            <div class="nitem__head"><i class="dot dot--nogo"></i><h3 class="nitem__name">江苏南通 · 启东碧海银沙</h3></div>
+            <p class="nitem__body">人工沙滩，但海滨浴场全天禁止下水游泳，仅有无边泳池可玩水，不符合「下海游泳」标准。</p>
+          </div>
+          <div class="nitem">
+            <div class="nitem__head"><i class="dot dot--nogo"></i><h3 class="nitem__name">广东东莞 · 滨海湾新区</h3></div>
+            <p class="nitem__body">有黄金海岸、东宝公园等滨海景观，但以观光步道和生态公园为主，没有正规的海滨游泳浴场。</p>
+          </div>
+          <div class="nitem">
+            <div class="nitem__head"><i class="dot dot--nogo"></i><h3 class="nitem__name">广东中山</h3></div>
+            <p class="nitem__body">虽有海岸线，但以渔村、红树林和湿地景观为主，没有面向游客的正规游泳沙滩。</p>
+          </div>
+        </div>
+
+        <!-- 折叠：有海岸线但不适合下海 -->
+        <div class="foot-note" id="footNote" data-open="false">
+          <button class="foot-note__toggle" type="button" id="fnToggle" aria-expanded="false" aria-controls="fnPanel">
+            <svg class="foot-note__caret" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M4 1.5L8.5 6L4 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h3>有海岸线，但不适合下海游泳的城市</h3>
+            <small>4 处</small>
+          </button>
+          <div class="foot-note__panel" id="fnPanel" role="region" aria-labelledby="fnToggle">
+            <div class="foot-note__inner">
+              <ul class="foot-note__list">
+                <li><b>杭州</b><span>钱塘江口泥沙质海岸，无天然游泳沙滩。</span></li>
+                <li><b>浙江绍兴</b><span>不直接临海，只有杭州湾泥质海涂。</span></li>
+                <li><b>山东滨州</b><span>以泥质滩涂和贝壳堤岛为主，无正规游泳沙滩。</span></li>
+                <li><b>福建宁德</b><span>部分区域有浴场（已列入上方清单），但整体仍以滩涂养殖和礁石海岸为主。</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /.content -->
+  </div><!-- /.shell -->
+
+</main>
+
+<footer class="site-foot">
+  <div class="site-foot__inner">
+    <div>
+      <h4>关于这份索引</h4>
+      <p>
+        收录标准只有一条：有正规海滨浴场、允许下海游泳。只有观景步道、滩涂、红树林、生态公园或人工水池的地方不进入正式名单，另列在「需特别注意」区块里。
+        中国台湾、中国香港、中国澳门按同样的标准核查后纳入对应海域。
+      </p>
+    </div>
+    <div>
+      <h4>出发前请确认</h4>
+      <ul>
+        <li>泳期开放时间，多数浴场只在夏季开放</li>
+        <li>当日旗号与浪况，红旗禁止下水</li>
+        <li>是否有救生员值守及救生站位置</li>
+        <li>当地临时管制或水质通报</li>
+      </ul>
+    </div>
+  </div>
+  <div class="site-foot__bar">
+    <span>下海 · 全国海滨浴场索引</span>
+    <span>共 14 个省级行政区 · 56 座城市与区 · 140 处浴场</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var q = document.getElementById('q');
+  var searchWrap = document.getElementById('searchWrap');
+  var clearQ = document.getElementById('clearQ');
+  var resetAll = document.getElementById('resetAll');
+  var empty = document.getElementById('empty');
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip[data-filter]'));
+  var pcards = Array.prototype.slice.call(document.querySelectorAll('.pcard'));
+  var citems = Array.prototype.slice.call(document.querySelectorAll('.citem'));
+  var active = new Set();
+
+  /* ---------- 预计算筛选计数 ---------- */
+  var tally = { swim: 0, caution: 0, nogo: 0 };
+  citems.forEach(function (it) {
+    var s = it.getAttribute('data-status');
+    if (tally[s] !== undefined) tally[s]++;
+  });
+  Object.keys(tally).forEach(function (k) {
+    var el = document.querySelector('.chip__count[data-count="' + k + '"]');
+    if (el) el.textContent = tally[k];
+  });
+
+  /* ---------- 主筛选逻辑 ---------- */
+  function apply() {
+    var term = q.value.trim().toLowerCase();
+    var hasTerm = term.length > 0;
+
+    pcards.forEach(function (card) {
+      var cardText = (card.getAttribute('data-search') || '') + ' ' + card.textContent;
+      var cardHit = !hasTerm || cardText.toLowerCase().indexOf(term) !== -1;
+
+      var visibleCities = 0;
+      var cities = Array.prototype.slice.call(card.querySelectorAll('.citem'));
+
+      /* 先判断每个城市条目是否命中 */
+      var hits = cities.map(function (city) {
+        var text = (city.getAttribute('data-search') || '') + ' ' + city.textContent;
+        return text.toLowerCase().indexOf(term) !== -1;
+      });
+      var anyCityHit = hits.indexOf(true) !== -1;
+      /* 只在省份层命中（例如搜「辽宁」）时，整省条目都保留；
+         若命中落到具体城市/浴场（例如搜「付家庄」），则只留下命中的城市 */
+      var showWholeProvince = cardHit && !anyCityHit;
+
+      cities.forEach(function (city, i) {
+        var st = city.getAttribute('data-status');
+        var statusOk = active.size === 0 || active.has(st);
+        var termOk = !hasTerm || hits[i] || showWholeProvince;
+
+        var show = statusOk && termOk;
+        city.hidden = !show;
+        if (show) visibleCities++;
+
+        /* 命中词高亮：只在标签本身匹配时 */
+        Array.prototype.slice.call(city.querySelectorAll('.btags li')).forEach(function (li) {
+          var hit = hasTerm && li.textContent.toLowerCase().indexOf(term) !== -1;
+          li.classList.toggle('is-hit', hit);
+        });
+      });
+
+      card.hidden = visibleCities === 0;
+    });
+
+    /* 整块海域若无可见卡片则隐藏 */
+    Array.prototype.slice.call(document.querySelectorAll('.seablock')).forEach(function (block) {
+      var any = Array.prototype.slice.call(block.querySelectorAll('.pcard')).some(function (c) { return !c.hidden; });
+      block.hidden = !any;
+    });
+
+    var anythingVisible = pcards.some(function (c) { return !c.hidden; });
+    empty.classList.toggle('is-on', !anythingVisible);
+    resetAll.hidden = !(hasTerm || active.size > 0);
+    searchWrap.classList.toggle('has-value', hasTerm);
+  }
+
+  /* ---------- 搜索 ---------- */
+  var t = null;
+  q.addEventListener('input', function () {
+    window.clearTimeout(t);
+    t = window.setTimeout(apply, 110);
+  });
+  clearQ.addEventListener('click', function () { q.value = ''; q.focus(); apply(); });
+
+  /* ---------- 状态筛选 ---------- */
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      var key = chip.getAttribute('data-filter');
+      var on = chip.getAttribute('aria-pressed') === 'true';
+      if (on) { active.delete(key); chip.setAttribute('aria-pressed', 'false'); }
+      else { active.add(key); chip.setAttribute('aria-pressed', 'true'); }
+      apply();
+    });
+  });
+
+  resetAll.addEventListener('click', function () {
+    q.value = '';
+    active.clear();
+    chips.forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+    apply();
+  });
+
+  /* ---------- 折叠面板 ---------- */
+  var fn = document.getElementById('footNote');
+  var fnToggle = document.getElementById('fnToggle');
+  fnToggle.addEventListener('click', function () {
+    var open = fn.getAttribute('data-open') === 'true';
+    fn.setAttribute('data-open', open ? 'false' : 'true');
+    fnToggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+  });
+
+  /* ---------- 滚动监听：海域标尺 + 移动端标签 ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-tab]'));
+  var blocks = Array.prototype.slice.call(document.querySelectorAll('.seablock'));
+  var topbar = document.getElementById('topbar');
+
+  function setCurrent(id) {
+    tabs.forEach(function (el) {
+      el.setAttribute('aria-current', el.getAttribute('data-tab') === id ? 'true' : 'false');
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) setCurrent(e.target.id);
+      });
+    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+    blocks.forEach(function (b) { spy.observe(b); });
+  }
+
+  /* ---------- 顶栏滚动阴影 ---------- */
+  window.addEventListener('scroll', function () {
+    topbar.classList.toggle('is-stuck', window.scrollY > 4);
+  }, { passive: true });
+
+  apply();
+})();
+</script>
+</body>
+</html>
