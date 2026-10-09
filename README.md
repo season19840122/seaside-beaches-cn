@@ -49,7 +49,7 @@ seaside-landing/
 
 ## 质检
 
-交付前跑过 9 项自动化检查，结论 **0 P0 / 0 P1**。可用 [`html-prototype-qa`](https://github.com/season19840122) 技能复跑：
+交付前跑过 9 项自动化检查，结论 **0 P0 / 0 P1**。可用 `html-prototype-qa` 技能复跑：
 
 ```bash
 ~/.agents/skills/html-prototype-qa/scripts/qa.sh \
